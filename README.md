@@ -13,6 +13,7 @@ Integrated AWS Cognito with Node js
 - Get User
 - Update User
 
+\```plaintext
 Dont Forget SetUp your configuration `.env`:
 AWS_COGNITO_USER_POOL_ID=
 AWS_COGNITO_CLIENT_ID=
