@@ -12,8 +12,7 @@ Integrated AWS Cognito with Node js
 - Forgot Password
 - Get User
 - Update User
-
-## Feature SignIn with Google and Manage Token
+# Feature SignIn with Google and Manage Token
 
 Dont Forget SetUp your configuration `.env`:
 ```
