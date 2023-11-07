@@ -11,6 +11,7 @@ module.exports = app => {
 
   // Update a Tutorial with id
   router.post("/signin", auth.SignIn);
+  router.get("/login-google", auth.SignInGoogle)
 
   router.get("/verify-token", auth.VerifyToken);
   
@@ -27,5 +28,4 @@ module.exports = app => {
   router.post("/user/update", verifyToken.VerifyToken, auth.updateUsers);
 
   app.use('/api', router);
-
 }

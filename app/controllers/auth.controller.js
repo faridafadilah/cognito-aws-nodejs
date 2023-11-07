@@ -1,5 +1,7 @@
 const Cognito = require("../cognito-service/index");
 require("dotenv").config();
+const qs = require("qs");
+let { uptime } = process;
 
 async function SignUp(req, res) {
   const {body} = req;
@@ -32,6 +34,21 @@ async function SignIn(req, res) {
 
   } else {
     res.json({ "error": "bad format" });
+  }
+}
+
+async function SignInGoogle(req, res) {
+  try {
+  let params = {
+    client_id: "xxxxxxxxxx",
+    response_type: "token",
+    scope: "email+openid+profile",
+    redirect_uri: "https://jwt.io",
+  }
+  let url = `https://{name domain}.auth.{aws region}.amazoncognito.com/oauth2/authorize?${qs.stringify(params, { encode: false })}`;
+        res.status(200).send({ ok: true, uptime: uptime(), login: url });
+  } catch (err) {
+    res.status(400).send({ ok: false, error: err.message });
   }
 }
 
@@ -83,8 +100,8 @@ async function VerifyToken(req, res, next) {
     // res.status(200).json({ message: "Token is valid", decodedToken: verificationResult.decodedToken });
     req.user = verificationResult.decodedToken;
     console.log(verificationResult.decodedToken);
-    next();
-    // res.status(200).json({ message: "Success Verify", error: verificationResult });
+    // next();
+    res.status(200).json({ message: "Success Verify", error: verificationResult });
   } else {
     res.status(401).json({ message: "Token is not valid", error: verificationResult.message });
   }
@@ -180,5 +197,5 @@ async function updateUsers(req, res) {
 
 
 module.exports = {
-  SignIn, Verify, SignUp, VerifyToken, ChangePassword, RefreshToken, ForgotPassword, ResetPassword, getUser, updateUsers
+  SignIn, Verify, SignUp, VerifyToken, ChangePassword, RefreshToken, ForgotPassword, ResetPassword, getUser, updateUsers, SignInGoogle
 }
